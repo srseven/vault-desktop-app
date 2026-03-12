@@ -9,6 +9,9 @@ let mainWindow;
 // Store RealDebrid credentials (set from settings page)
 let rdCredentials = { host: '', user: '', pass: '' };
 
+// Development mode detection
+const isDev = process.env.NODE_ENV === 'development' || process.env.DEV === '1';
+
 // Performance metrics
 const performanceMetrics = {
   appStartTime: Date.now(),
@@ -45,8 +48,8 @@ function createWindow() {
     minHeight: 700,
     titleBarStyle: 'hiddenInset',
     webPreferences: {
-      webSecurity: false,
-      allowRunningInsecureContent: true,
+      webSecurity: false,  // Required for RealDebrid direct streaming (CORS bypass)
+      allowRunningInsecureContent: true,  // Required for mixed content from RealDebrid CDN
       nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
       experimentalFeatures: true,
@@ -128,20 +131,20 @@ function createWindow() {
     console.log('========================================');
     console.log('[Electron] ✅ RD credentials cached for 24h');
     console.log('  Host:', creds.host);
-    console.log('  User:', creds.user);
+    console.log('  User: [REDACTED]');  // Don't log username for security
     console.log('  Ready to intercept streams!');
     console.log('========================================');
     console.log('');
     return { ok: true, cached: true };
   });
 
-  // ⭐ Get cached credentials (avoid unnecessary IPC)
+  // ⭐ Get cached credentials status (don't return actual credentials)
   ipcMain.handle('get-rd-credentials', () => {
     if (credentialsExpiry > Date.now() && rdCredentials.host) {
-      console.log('[Electron] Returning cached credentials');
-      return { ok: true, cached: true, credentials: rdCredentials };
+      console.log('[Electron] Returning cached credentials status');
+      return { ok: true, cached: true, hasCredentials: true };  // Don't return actual creds
     }
-    return { ok: false, cached: false };
+    return { ok: false, cached: false, hasCredentials: false };
   });
 
   // ⭐ Performance monitoring handler
@@ -384,8 +387,14 @@ app.on('window-all-closed', () => {
 });
 
 app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
-  event.preventDefault();
-  callback(true);
+  // Only accept invalid certificates in development mode
+  if (isDev) {
+    event.preventDefault();
+    callback(true);
+  } else {
+    // In production, let Electron handle certificate validation
+    callback(false);
+  }
 });
 
 // ⭐ GPU crash recovery

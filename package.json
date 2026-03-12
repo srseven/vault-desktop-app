@@ -27,8 +27,7 @@
     "directory": "desktopapp"
   },
   "bugs": {
-    "url": "https://github.com/vault-stash/vault/issues",
-    "email": "support@vault-stash.com"
+    "url": "https://github.com/vault-stash/vault/issues"
   },
   "homepage": "https://github.com/vault-stash/vault#readme",
   "devDependencies": {
