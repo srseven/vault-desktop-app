@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out/
+
+# macOS
+.DS_Store
+*.dmg
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary
+tmp/
+temp/
+
+# Documentation (except README)
+*.md
+!README.md
+
+# Test/debug files
+test-*.html
+*-debug.html
+performance-monitor.js

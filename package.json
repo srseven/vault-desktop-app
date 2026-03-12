@@ -1,0 +1,77 @@
+{
+  "name": "vault-macos",
+  "version": "1.0.0",
+  "description": "VAULT/Stash - Native macOS app for direct RealDebrid streaming. Zero proxy bandwidth, instant playback via Electron intercept.",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --mac",
+    "build:dir": "electron-builder --dir",
+    "pack": "electron-builder --dir"
+  },
+  "keywords": [
+    "realdebrid",
+    "webdav",
+    "media-player",
+    "streaming",
+    "electron",
+    "macos",
+    "vault",
+    "stash"
+  ],
+  "author": "VAULT/Stash Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vault-stash/vault.git",
+    "directory": "desktopapp"
+  },
+  "bugs": {
+    "url": "https://github.com/vault-stash/vault/issues",
+    "email": "support@vault-stash.com"
+  },
+  "homepage": "https://github.com/vault-stash/vault#readme",
+  "devDependencies": {
+    "electron": "^41.0.0",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.vault.macos",
+    "productName": "VAULT",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "../**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.entertainment",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "electron/icon.icns"
+    },
+    "dmg": {
+      "title": "VAULT - RealDebrid Media Player",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
+  }
+}

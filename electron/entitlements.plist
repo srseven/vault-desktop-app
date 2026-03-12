@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Network Access -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <key>com.apple.security.network.server</key>
+    <true/>
+    
+    <!-- File Access (for local file browsing) -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+    
+    <!-- Allow outgoing connections to RealDebrid WebDAV -->
+    <key>com.apple.security.network.connections</key>
+    <array>
+        <string>https://dav.real-debrid.com</string>
+        <string>https://cdn.real-debrid.com</string>
+    </array>
+</dict>
+</plist>
